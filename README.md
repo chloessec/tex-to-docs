@@ -1,4 +1,4 @@
-# TeX to Docs
+# LaTeX to Docs
 
 Paste LaTeX on the left, see it rendered on the right, and send it to Google Docs with one click. Equations arrive as **native, editable Google Docs equations**, not images.
 
@@ -27,49 +27,23 @@ The first send creates a new Google Doc. After that, the button says **Update Go
 
 ---
 
-## Setup
+## How I made it
 
-You need two things: a Google OAuth client ID (free, about 10 minutes) and a Vercel deployment.
+I wanted a quick way to get math from LaTeX into Google Docs without retyping every equation in the Docs equation editor, so I built this as a small site that runs entirely in the browser.
 
-### 1. Create the Google OAuth client
+### Connecting it to Google
 
-1. Go to <https://console.cloud.google.com/> and create a project (for example, "TeX to Docs").
-2. Open **APIs & Services › Library**, search for **Google Drive API**, and click **Enable**.
-3. Open **Google Auth Platform** (also listed as **OAuth consent screen**) and click **Get started**:
-   - App name: `TeX to Docs`; support email: your email.
-   - Audience: **External**.
-   - Contact email: your email. Agree and click **Create**.
-4. Under **Audience › Test users**, click **Add users** and add your own Gmail address. Leave the app in **Testing**; that's all you need for personal use, and it avoids Google's review process.
-5. Under **Data Access**, click **Add or remove scopes** and add `https://www.googleapis.com/auth/drive.file`. This scope only lets the site see files it created itself, not the rest of your Drive.
-6. Under **Clients**, click **Create client**:
-   - Application type: **Web application**
-   - Authorized JavaScript origins: add `http://localhost:3000` now. You'll add your Vercel URL in step 3 below.
-   - No redirect URIs are needed.
-7. Copy the **Client ID** (it ends in `.apps.googleusercontent.com`). It isn't a secret, but there's no need to share it.
+I created a project in the Google Cloud Console and turned on the **Google Drive API**. Then I set up the OAuth consent screen as an **External** app and left it in **Testing** mode, with my own Gmail as the only test user. That's all a personal tool needs, and it skips Google's app review.
 
-### 2. Deploy to Vercel
+For permissions, I chose the `drive.file` scope. It only lets the site see files it created itself, not the rest of my Drive. Last, I made a **Web application** OAuth client, with `http://localhost:3000` and my Vercel URL as the allowed JavaScript origins.
 
-**Option A: through GitHub (recommended)**
+### Turning equations into real Google Docs equations
 
-1. Create a new GitHub repository, click **uploading an existing file**, select all the files in this folder and drag them in.
-2. In Vercel, click **Add New › Project** and import the repository. Keep the framework preset as **Other**; the included `vercel.json` already sets the build command and output folder.
-3. Under **Environment Variables**, add `GOOGLE_CLIENT_ID` with the client ID from step 1.
-4. Click **Deploy**.
+The tricky part was getting equations to show up as editable equations instead of images. Google Docs has no direct way to accept LaTeX, but it does convert Word's equation format (Office Math) when it imports a `.docx` file. So the site renders each equation with KaTeX, converts it to Office Math, builds a Word file in the browser, and uploads it to Drive with a request to convert it to a Google Doc. The steps are under [How it works](#how-it-works) below.
 
-**Option B: from your terminal**
+### Deploying
 
-```bash
-npm install
-npx vercel                  # follow the prompts
-npx vercel env add GOOGLE_CLIENT_ID
-npx vercel --prod
-```
-
-### 3. Allow your Vercel URL in Google
-
-Back in Google Cloud, open **Clients**, open your web client, and add your production URL (for example `https://tex-to-docs.vercel.app`) under **Authorized JavaScript origins**. Save. It can take a few minutes to take effect.
-
-Open the site, click **Send to Google Docs**, choose your account, and allow access. Because the app is in Testing mode, Google shows a "Google hasn't verified this app" screen; click **Continue**. This is expected for personal apps.
+I uploaded the files to GitHub and imported the repository into Vercel. The `GOOGLE_CLIENT_ID` environment variable holds my client ID, and `build.mjs` writes it into `config.js` at build time. That's why every file sits at the top level: the whole folder can be dragged into GitHub in one go.
 
 ---
 
@@ -103,6 +77,7 @@ Project layout (every file sits at the top level, so you can drag them all into 
 index.html      the page
 style.css       the styles
 app.js          the editor, LaTeX converter, Google sign-in and upload (pre-built)
+logo-*.png      the LaTeX and Google Docs logos in the header
 build.mjs       copies the site into public/ and writes config.js from GOOGLE_CLIENT_ID
 vercel.json     build settings for Vercel
 package.json    tells Vercel how to run the build

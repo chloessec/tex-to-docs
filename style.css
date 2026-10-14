@@ -20,6 +20,7 @@
   --focus: #2f5bd3;
   --ui: "Spline Sans", system-ui, sans-serif;
   --mono: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+  --logo-filter: none;
   color-scheme: light;
 }
 
@@ -38,13 +39,14 @@
     --error: #f08a7e;
     --error-bg: #3a1f1d;
     --focus: #7899f4;
+    --logo-filter: invert(1);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --ink: #d9e1ee; --ink-soft: #8d98ab; --paper: #161b26; --grid: #1e2533; --grid-major: #263043;
   --desk: #0e121a; --chrome: #12161f; --line: #262e3d; --accent: #5b82f0; --accent-hover: #7899f4;
-  --error: #f08a7e; --error-bg: #3a1f1d; --focus: #7899f4; color-scheme: dark;
+  --error: #f08a7e; --error-bg: #3a1f1d; --focus: #7899f4; --logo-filter: invert(1); color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -77,20 +79,20 @@ body {
   font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
   color: var(--ink); text-decoration: none; white-space: nowrap;
 }
-.brand-mark {
-  display: grid; place-items: center;
-  width: 28px; height: 28px; border-radius: 7px;
-  background: var(--accent); color: var(--accent-ink);
-  font: italic 17px/1 Georgia, serif;
-}
+.brand-logo { display: flex; align-items: center; gap: 6px; color: var(--ink-soft); }
+.brand-logo img { display: block; height: 22px; width: auto; }
+.brand-logo .logo-latex { filter: var(--logo-filter); }
+.brand-logo .logo-docs { height: 28px; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.byline { font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--ink-soft); }
 .docname { flex: 1; min-width: 0; }
 .docname input {
-  width: 100%; max-width: 420px;
+  width: 160px; min-width: 120px; max-width: 100%;
   font: 500 16px var(--ui); color: var(--ink);
-  background: transparent; border: 1px solid transparent; border-radius: 6px;
-  padding: 6px 8px;
+  background: transparent; border: 1px solid var(--line); border-radius: 6px;
+  padding: 6px 10px;
 }
-.docname input:hover { border-color: var(--line); }
+.docname input:hover { border-color: var(--ink-soft); }
 .docname input:focus { border-color: var(--accent); outline: none; }
 .actions { display: flex; align-items: center; gap: 10px; }
 .linked { display: flex; align-items: center; gap: 10px; font-size: 14px; white-space: nowrap; }

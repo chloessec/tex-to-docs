@@ -6,7 +6,7 @@ import path from 'path';
 import crypto from 'crypto';
 
 const out = 'public';
-const files = ['index.html', 'style.css', 'app.js'];
+const files = ['index.html', 'style.css', 'app.js', 'logo-latex.png', 'logo-docs.png'];
 
 const missing = files.filter((f) => !fs.existsSync(f));
 if (missing.length) {
