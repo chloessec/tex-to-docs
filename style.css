@@ -172,14 +172,14 @@ body {
 .page {
   background: var(--page);
   color: #000;
-  width: 100%;
-  max-width: 816px;
+  width: 816px;
   min-height: 1056px;
   margin: 0 auto;
   padding: 96px;
   box-shadow: 0 1px 3px rgba(20, 30, 50, 0.12), 0 0 0 1px rgba(20, 30, 50, 0.06);
   font: 14.67px/1.38 Arial, Helvetica, sans-serif;
   overflow-wrap: break-word;
+  position: relative;
 }
 .page > :first-child { margin-top: 0; }
 .page p { margin: 0 0 10px; }
@@ -188,8 +188,30 @@ body {
 .page h2 { font-size: 26.7px; font-weight: 400; margin: 26px 0 8px; }
 .page h3 { font-size: 21.3px; font-weight: 400; margin: 24px 0 6px; }
 .page h4 { font-size: 18.7px; font-weight: 400; margin: 20px 0 6px; }
-.page ul, .page ol { margin: 0 0 10px; padding-left: 48px; }
-.page li { margin-bottom: 4px; }
+/* lists: marker at 0.25in, text at 0.5in, like Google Docs */
+.page .list { margin: 0 0 10px; padding-left: 0.25in; }
+.page .li { display: grid; grid-template-columns: minmax(0.25in, max-content) minmax(0, 1fr); column-gap: 0.06in; margin-bottom: 4px; }
+.page .li-body > :first-child { margin-top: 0; }
+.page .li-body > p:last-child, .page .li-body > .list:last-child { margin-bottom: 0; }
+.page .li-body .list { margin-top: 4px; }
+.page .description .marker { font-weight: 700; }
+.page sup, .page sub { line-height: 0; }
+
+/* answer space, writing blanks and page breaks */
+.page .vspace { width: 100%; }
+.page .hspace { display: inline-block; vertical-align: baseline; height: 1em; }
+.page .hspace.blank { border-bottom: 1px solid currentColor; height: 1.05em; }
+.page .pagebreak { height: 2.5in; } /* bottom margin, gap, next page's top margin */
+.page .pagebreak::before {
+  content: "";
+  position: absolute;
+  transform: translateY(1in);
+  left: 0;
+  right: 0;
+  height: 0.5in;
+  background: var(--desk);
+  box-shadow: inset 0 6px 6px -6px rgba(20, 30, 50, 0.18), inset 0 -6px 6px -6px rgba(20, 30, 50, 0.18);
+}
 .page code { font-family: "Courier New", monospace; }
 .page .display-math { margin: 12px 0; overflow-x: auto; overflow-y: hidden; }
 .page .katex { font-size: 1.12em; }
@@ -237,7 +259,7 @@ body {
   #editor { padding: 16px; }
   .pane-foot { padding: 8px 16px; }
   .desk { padding: 16px; }
-  .page { padding: 32px 24px; min-height: 0; }
+  .page { min-height: 0; }
 }
 @media (max-width: 480px) {
   .btn { padding: 8px 10px; }

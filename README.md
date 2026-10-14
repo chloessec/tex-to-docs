@@ -6,13 +6,16 @@ Everything runs in your browser. There is no server and no database: the site si
 
 ## What it supports
 
-- Inline math: `$...$` and `\(...\)`
-- Display math: `$$...$$`, `\[...\]`, and `equation`, `align`, `gather` and `multline` (with or without `*`)
-- `\section`, `\subsection`, `\subsubsection` (these become Google Docs headings)
-- `itemize` and `enumerate` lists
-- `\textbf`, `\textit`, `\emph`, `\underline`, `\texttt`
-- `\title` and `\author` when you paste a full document with `\begin{document}`
-- `%` comments are ignored; the preamble (`\documentclass`, `\usepackage`) is skipped
+- Inline math: `$...$` and `\(...\)`; display math: `$$...$$`, `\[...\]`, `equation`, `align`, `gather`, `multline` (with or without `*`)
+- `\section`, `\subsection`, `\subsubsection` (these become Google Docs headings), and `\title`/`\author`/`\maketitle`
+- `itemize`, `enumerate` and `description` lists, including nested lists and custom labels such as `[label=\alph*.]`, `[label=(\roman*)]` or `\item[Q1.]`
+- Your own shortcuts: `\newcommand`, `\renewcommand`, `\def`, `\DeclareMathOperator`
+- `center`, `flushleft`, `flushright`
+- Answer space and layout: `\vspace{2in}`, `\newpage`, `\hspace`, and writing blanks such as `\underline{\hspace{2.5in}}`
+- Text styles: `\textbf`, `\textit`, `\emph`, `\underline`, `\texttt`, `\textcolor`, and `{\Large\bfseries ...}`-style size and font switches
+- The font size from `\documentclass[12pt]{article}`
+- `%` comments are ignored; the rest of the preamble (`\usepackage`, `\setlength`, ...) is skipped
+- Simple `tabular` tables come through as one line per row (not as a real table yet)
 
 An equation with an error is underlined in red in the preview; hover it to see the error message. If you send anyway, it goes into the doc as red text so you can find it.
 
