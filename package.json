@@ -1,0 +1,11 @@
+{
+  "name": "tex-to-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Paste LaTeX, preview it, send it to Google Docs with editable equations",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs && npx --yes serve public -l 3000"
+  }
+}

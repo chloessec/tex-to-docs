@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TeX to Docs</title>
+  <meta name="description" content="Paste LaTeX, preview it, and send it to Google Docs with editable equations." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232F5BD3'/><text x='16' y='22' font-family='Georgia' font-size='17' font-style='italic' fill='white' text-anchor='middle'>∑</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="/" aria-label="TeX to Docs home"><span class="brand-mark">∑</span>TeX to Docs</a>
+    <label class="docname">
+      <span class="visually-hidden">Document name</span>
+      <input id="docName" type="text" value="Untitled math" spellcheck="false" autocomplete="off" />
+    </label>
+    <div class="actions">
+      <span id="linked" class="linked" hidden>
+        <a id="docLink" href="#" target="_blank" rel="noopener">Open in Google Docs</a>
+        <button id="unlink" class="textbtn" type="button" title="Next send creates a new doc">New doc next time</button>
+      </span>
+      <button id="download" class="btn" type="button">Download .docx</button>
+      <button id="send" class="btn primary" type="button">Send to Google Docs</button>
+    </div>
+  </header>
+
+  <main class="split" id="split">
+    <section class="pane editor-pane" aria-label="LaTeX source">
+      <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="LaTeX source"></textarea>
+      <footer class="pane-foot">
+        <span id="count">0 equations</span>
+        <span id="errors" class="errors" hidden></span>
+      </footer>
+    </section>
+
+    <div class="divider" id="divider" role="separator" aria-orientation="vertical" aria-label="Resize panes" tabindex="0"></div>
+
+    <section class="pane preview-pane" aria-label="Preview">
+      <div class="desk">
+        <article class="page" id="preview"></article>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="setup" class="setup">
+    <h2>Connect your Google account first</h2>
+    <p>This site needs a Google OAuth client ID before it can create docs in your Drive. Follow the steps in the README, then set <code>GOOGLE_CLIENT_ID</code> in Vercel and redeploy.</p>
+    <p>Until then you can download the .docx and open it with Google Docs yourself: upload it to Drive, then choose Open with › Google Docs.</p>
+    <form method="dialog"><button class="btn primary">Got it</button></form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
