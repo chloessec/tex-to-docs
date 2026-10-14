@@ -3,6 +3,7 @@
 // Every file lives at the top level of the repository, so no folders need uploading.
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 
 const out = 'public';
 const files = ['index.html', 'style.css', 'app.js'];
@@ -16,6 +17,14 @@ if (missing.length) {
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
 for (const f of files) fs.copyFileSync(f, path.join(out, f));
+
+// Stamp app.js and style.css with a content hash so browsers always load the newest version.
+const version = (f) => crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex').slice(0, 10);
+const htmlPath = path.join(out, 'index.html');
+const html = fs.readFileSync(htmlPath, 'utf8')
+  .replace(/href="style\.css[^"]*"/, `href="style.css?v=${version('style.css')}"`)
+  .replace(/src="app\.js[^"]*"/, `src="app.js?v=${version('app.js')}"`);
+fs.writeFileSync(htmlPath, html);
 
 const clientId = (process.env.GOOGLE_CLIENT_ID || '').trim();
 fs.writeFileSync(path.join(out, 'config.js'), `window.APP_CONFIG = { googleClientId: ${JSON.stringify(clientId)} };\n`);
