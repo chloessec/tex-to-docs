@@ -266,3 +266,8 @@ body {
   #download { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* label + formula rows from align blocks: formulas line up at 1.75in, like a tab stop in Docs */
+.page p.formula { display: flex; align-items: baseline; gap: 0; }
+.page p.formula .flabel { flex: 0 0 auto; min-width: 1.75in; padding-right: 0.15in; }
+.page p.formula .fbody { flex: 1 1 auto; min-width: 0; }
