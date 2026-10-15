@@ -14,8 +14,10 @@ Everything runs in your browser. There is no server and no database: the site si
 - Answer space and layout: `\vspace{2in}`, `\newpage`, `\hspace`, and writing blanks such as `\underline{\hspace{2.5in}}`
 - Text styles: `\textbf`, `\textit`, `\emph`, `\underline`, `\texttt`, `\textcolor`, and `{\Large\bfseries ...}`-style size and font switches
 - The font size from `\documentclass[12pt]{article}`
-- `%` comments are ignored; the rest of the preamble (`\usepackage`, `\setlength`, ...) is skipped
-- Simple `tabular` tables come through as one line per row (not as a real table yet)
+- `%` comments are ignored (a comment-only line does not start a new paragraph, as in LaTeX); the rest of the preamble (`\usepackage`, `\setlength`, ...) is skipped
+- `tabular`, `tabular*` and `tabularx` become real Google Docs tables, with the borders from `|` and `\hline` (also `\cline` and booktabs rules), `l`/`c`/`r` alignment, `p{...}` column widths, `\multicolumn` and `\arraystretch`
+- `verbatim`, `lstlisting` and `minted` blocks keep their line breaks in a monospace font; `\verb|...|` works inline
+- `tikzpicture` drawings are drawn in the preview and inserted into the doc as images. This is a small built-in renderer, not full TikZ. It handles `\draw`/`\fill`/`\filldraw`/`\node`/`\coordinate`, lines, `cycle`, `rectangle`, `circle`, `arc`, `grid`, arrows, dashed/dotted lines, colors, line widths, `scale`, node positions (`above right`, `midway`, ...), `label=`, angle and right-angle marks (`\pic {angle=A--B--C}`), and simple `\foreach` loops. Pictures written side by side stay side by side.
 
 An equation with an error is underlined in red in the preview; hover it to see the error message. If you send anyway, it goes into the doc as red text so you can find it.
 

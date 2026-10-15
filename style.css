@@ -273,3 +273,11 @@ body {
 .page p.formula { display: flex; align-items: baseline; gap: 0; }
 .page p.formula .flabel { flex: 0 0 auto; min-width: 1.75in; padding-right: 0.15in; }
 .page p.formula .fbody { flex: 1 1 auto; min-width: 0; }
+
+/* tables, verbatim blocks and TikZ pictures */
+.page table.tex-table { border-collapse: collapse; margin-top: 0; margin-bottom: 10px; }
+.page table.tex-table td { vertical-align: top; }
+.page table.tex-table td > :first-child { margin-top: 0; }
+.page p.verbatim { white-space: pre-wrap; }
+.page .tikz { display: inline-block; vertical-align: bottom; line-height: 0; }
+.page .tikz svg { display: block; overflow: visible; }
